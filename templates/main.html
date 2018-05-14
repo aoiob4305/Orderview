@@ -1,0 +1,15 @@
+<html>
+	<head>
+		<title>Orderview</title>
+	</head>
+	<body>
+		<h1>Orders</h1>
+		{% for order in orders %}
+			<b>{{ order.equiName }}</a></b><br />
+			<i>{{ order.notiTime }}</i><br />
+			<p>{{ order.notiContent }}</p>
+			<hr />
+		{% endfor %}
+	</body>
+</html>
+
