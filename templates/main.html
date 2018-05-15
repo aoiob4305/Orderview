@@ -4,10 +4,11 @@
 	</head>
 	<body>
 		<h1>Orders</h1>
-		{% for order in orders %}
-			<b>{{ order.equiName }}</a></b><br />
-			<i>{{ order.notiTime }}</i><br />
-			<p>{{ order.notiContent }}</p>
+		{% for result in results %}
+			<b>{{ result['equiName'] }}</a></b><br />
+			<i>{{ result['notiDate'] }}</i><br />
+			<i>{{ result['notiTime'] }}</i><br />
+			<p>{{ result['notiContent'] }}</p>
 			<hr />
 		{% endfor %}
 	</body>
