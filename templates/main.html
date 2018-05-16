@@ -5,11 +5,10 @@
 	<body>
 		<h1>Orders</h1>
 		{% for result in results %}
-//			<b>{{ result['equiName'] }}</a></b><br />
-//			<i>{{ result['notiDate'] }} / {{ result['notiTime'] }}</i><br />
-//			<i>{{ result['equiCode'] }} / {{ result['order_con</i><br />
-//			<p>{{ result['notiContent'] }}</p>
-			<p>{{ result }}</p>
+			<b>{{ result[0] }}</a></b><br />
+			<i>{{ result[1] }} / {{ result[2] }}</i><br />
+			<i>{{ result[3] }} / {{ result[4] }}</i><br />
+			<p>{{ result[5] }}</p>
 			<hr />
 		{% endfor %}
 	</body>
