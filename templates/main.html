@@ -5,10 +5,9 @@
 	<body>
 		<h1>Orders</h1>
 		{% for result in results %}
-			<b>{{ result[0] }}</a></b><br />
-			<i>{{ result[1] }} / {{ result[2] }}</i><br />
-			<i>{{ result[3] }} / {{ result[4] }}</i><br />
-			<p>{{ result[5] }}</p>
+			<b>{{ result[0] }} / {{ result[4] }}</a></b><br />
+			<i>{{ result[2] }} / {{ result[3] }}</i><br />
+			<p>{{ result[1] }}</p>
 			<hr />
 		{% endfor %}
 	</body>
