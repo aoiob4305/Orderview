@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.route("/")
 def main():
 #    results = ovsql.convEncoding(ovsql.getOrderDataTargetDate("20180515"),'ISO-8859-1','euc-kr')
-    today = datetime.now().strftime("%Y%M%d")
+    today = datetime.now().strftime("%Y%m%d")
     status, results = ovsql.getOrderDataTargetDate(today)
     return render_template("main.html", results=results)
 

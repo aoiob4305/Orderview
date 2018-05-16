@@ -11,19 +11,13 @@ DATABASE="PM_EUQI_NOTI"
 def sendQueryToServer(server, user, password, database, sqlquery):
     try:
         conn = pymssql.connect(server=server, user=user, password=password, database=database)
-    except pymssql.Error as e:
-       print("SQL Error: "+str(e))
-       fetchResult = [False, 'Connection Error']
-
-    cursor = conn.cursor()
-
-    try:
+        cursor = conn.cursor()
         cursor.execute(sqlquery)
         fetchResult = cursor.fetchall()
+
     except pymssql.Error as e:
-        print("SQL Error: "+str(e))
-        conn.close()
-        fetchResult = [False, 'Query Error']
+       print("SQL Error: "+str(e))
+       fetchResult = [False, 'Error']
 
     conn.close()
 
@@ -47,12 +41,12 @@ def getMcData():
 def convEncoding(items, code1, code2):
     results = []
     for item in items:
-        result = {'equiName': item[0].encode(code1).decode(code2),
-                'notiContent': item[1].encode(code1).decode(code2),
-                'notiDate': item[2].encode(code1).decode(code2),
-                'notiTime': item[3].encode(code1).decode(code2),
-                'equiCode': item[4].encode(code1).decode(code2),
-                'order_con': item[5].encode(code1).decode(code2)}
+        result = ()
+        for t in item:
+            try:
+                result = result + (t.encode(code1).decode(code2),)
+            except:
+                result = result + ('',)
         results.append(result)
 
     return results
