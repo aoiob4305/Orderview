@@ -25,14 +25,19 @@
 	<div class="divTableBody">
 		{% for result in results %}
 			{% if plant|upper == result[6] or plant == None %}
-				<div class="divTableRow">
+				{% if result['order_con'] == "X" %}
+				<div class="divTableRow" style="background-color:gray">
+				{% else %}
+				<div class="divTableRow" style="background-color:red">
+				{% endif %}
 					<div class="divTableCell">{{ loop.index }}</div>
-					<div class="divTableCell">{{ result[0] }}</div>
-					<div class="divTableCell">{{ result[1] }}</div>
-					<div class="divTableCell">{{ result[2][6:] }}</div>
-					<div class="divTableCell">{{ "%s:%s"|format(result[3][0:2],result[3][2:4]) }}</div>
-					<div class="divTableCell">{{ result[5] }}</div>
+					<div class="divTableCell">{{ result['equiName'] }}</div>
+					<div class="divTableCell">{{ result['notiContent'] }}</div>
+					<div class="divTableCell">{{ result['notiDate'][6:] }}</div>
+					<div class="divTableCell">{{ "%s:%s"|format(result['notiTime'][0:2],result['notiTime'][2:4]) }}</div>
+					<div class="divTableCell">{{ result['order_con'] }}</div>
 <!--					
+					equiName,notiContent,notiDate,notiTime,equiCode,order_con
 					<div class="divTableCell">{{ result[6] }}</div>
 -->
 				</div>

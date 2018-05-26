@@ -15,11 +15,8 @@ def main(plant=None):
         results = ovsql.convEncoding(results, 'ISO-8859-1', 'euc-kr')
     
     # 플랜트 데이터 추가
-    resultsAddPlantData = []
     for result in results:
-        resultsAddPlantData.append(result + (ovsql.getWhichPlant(result[4]),))
-
-    results = resultsAddPlantData
+        result['plant'] = ovsql.getWhichPlant(result['equiCode'])
 
     return render_template("main.html", results=results, plant=plant)
 

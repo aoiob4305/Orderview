@@ -2,39 +2,40 @@
 
 import pymssql
 import sqlite3
+from configparser import ConfigParser
 
-#서버 주소 및 정보
-SERVER="10.214.100.73"
-USER="PM_EQ"
-PASSWORD="pm_Eq1@"
-MSSQLDB="PM_EUQI_NOTI"
+config = ConfigParser()
+config.read("config.ini")
 
-def sendQueryToServer(server, user, password, database, sqlquery):
-    try:
-        conn = pymssql.connect(server=server, user=user, password=password, database=database)
-        cursor = conn.cursor()
-        cursor.execute(sqlquery)
-        fetchResult = cursor.fetchall()
+SERVER=config['SERVER']['SERVER']
+USER=config['SERVER']['USER']
+PASSWORD=config['SERVER']['PASSWORD']
+MSSQLDB=config['SERVER']['MSSQLDB']
 
-    except pymssql.Error as e:
-       print("SQL Error: "+str(e))
-       fetchResult = [False, 'Error']
+def sendQueryToServer(sqlquery):
+    print (SERVER, USER, PASSWORD, MSSQLDB)
+    with pymssql.connect(server=SERVER, user=USER, password=PASSWORD, database=MSSQLDB) as conn:
+        with conn.cursor(as_dict=True) as cursor:
+            try:
+                cursor.execute(sqlquery)
+                fetchResult = [True, cursor.fetchall()]
+            except pymssql.Error as e:
+                print("SQL Error: "+str(e))
+                fetchResult = [False, 'Error']
 
-    conn.close()
-
-    return [True, fetchResult]
+    return fetchResult
 
 # 특정일 고장 데이터 뽑기
 def getOrderDataTargetDate(targetDate):
     SQLQUERY = "SELECT equiName,notiContent,notiDate,notiTime,equiCode,order_con FROM PM01_EuqiNotify WHERE notiDate='"+targetDate+"' ORDER BY notiTime DESC"
     
-    results = sendQueryToServer(SERVER, USER, PASSWORD, MSSQLDB, SQLQUERY)
+    results = sendQueryToServer(SQLQUERY)
     return results
 
 def getMcData():
     SQLQUERY = "SELECT McCode, Mc_Name, MaintPart FROM PM01_McMaster ORDER BY McCode ASC"
 
-    results = sendQueryToServer(SERVER, USER, PASSWORD, MSSQLDB, SQLQUERY)
+    results = sendQueryToServer(SQLQUERY)
     return results
 
 # 인코딩이 문제라 변환해준다.
@@ -42,18 +43,18 @@ def getMcData():
 def convEncoding(items, code1, code2):
     results = []
     for item in items:
-        result = ()
-        for t in item:
+        result = {}
+        for key in item.keys():
             try:
-                result = result + (t.encode(code1).decode(code2),)
+                result[key] = item[key].encode(code1).decode(code2)
             except:
-                result = result + ('',)
+                result[key] = ''
         results.append(result)
 
     return results
 
-mcDB = "test.db"
 #local mcdata check
+mcDB = "test.db"
 def getWhichPlant(mcCode):
     conn = sqlite3.connect(mcDB)
     cur = conn.cursor()
