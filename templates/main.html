@@ -3,11 +3,21 @@
 {% block title %}Orderview{% endblock %}
 
 {% block script %} 
+	function printClock() {
+    	var clock = document.getElementById("clock");            // 출력할 장소 선택
+    	var now = new Date();                                     // 현재시간
+    	clock.innerHTML = now;  
+		setTimeout("printClock()",1000);         // 1초마다 printClock() 함수 호출
+	}
+
 	window.setTimeout('window.location.reload()',60000); //60초마다 새로고침
+	window.onload = function() {
+		printClock();
+	} 
 {% endblock %}
 
 {% block content %}
-<h1>보전 고장 통지</h1>
+<h1>보전 고장 통지</h1><h3 id="clock"></h3>
 <div class="divTable darkTable">
 	<div class="divTableHeading">
 		<div class="divTableRow">

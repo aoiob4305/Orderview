@@ -13,7 +13,7 @@ PASSWORD=config['SERVER']['PASSWORD']
 MSSQLDB=config['SERVER']['MSSQLDB']
 
 def sendQueryToServer(sqlquery):
-    print (SERVER, USER, PASSWORD, MSSQLDB)
+    #print (SERVER, USER, PASSWORD, MSSQLDB)
     with pymssql.connect(server=SERVER, user=USER, password=PASSWORD, database=MSSQLDB) as conn:
         with conn.cursor(as_dict=True) as cursor:
             try:
