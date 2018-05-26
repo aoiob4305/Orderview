@@ -1,15 +1,55 @@
-<html>
-	<head>
-		<title>Orderview</title>
-	</head>
-	<body>
-		<h1>Orders</h1>
-		{% for result in results %}
-			<b>{{ result[0] }} / {{ result[4] }}</a></b><br />
-			<i>{{ result[2] }} / {{ result[3] }}</i><br />
-			<p>{{ result[1] }}</p>
-			<hr />
-		{% endfor %}
-	</body>
-</html>
+{% extends "base.html" %}
 
+{% block title %}Orderview{% endblock %}
+
+{% block script %} 
+	window.setTimeout('window.location.reload()',60000); //60초마다 새로고침
+{% endblock %}
+
+{% block content %}
+<h1>보전 고장 통지</h1>
+<div class="divTable darkTable">
+	<div class="divTableHeading">
+		<div class="divTableRow">
+			<div class="divTableHead" style="width: 5%;">순</div>
+			<div class="divTableHead" style="width: 25%;">장비명</div>
+			<div class="divTableHead" style="width: 50%;">내용</div>
+			<div class="divTableHead" style="width: 5%;">일자</div>
+			<div class="divTableHead" style="width: 10%;">시간</div>
+			<div class="divTableHead" style="width: 5%;">완료</div>
+<!--			
+			<div class="divTableHead">플랜트</div>
+-->
+		</div>
+	</div>
+	<div class="divTableBody">
+		{% for result in results %}
+			{% if plant|upper == result[6] or plant == None %}
+				<div class="divTableRow">
+					<div class="divTableCell">{{ loop.index }}</div>
+					<div class="divTableCell">{{ result[0] }}</div>
+					<div class="divTableCell">{{ result[1] }}</div>
+					<div class="divTableCell">{{ result[2][6:] }}</div>
+					<div class="divTableCell">{{ "%s:%s"|format(result[3][0:2],result[3][2:4]) }}</div>
+					<div class="divTableCell">{{ result[5] }}</div>
+<!--					
+					<div class="divTableCell">{{ result[6] }}</div>
+-->
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+	<!--
+	<div class="divTableFoot tableFootStyle">
+		<div class="divTableRow">
+			<div class="divTableCell">foot1</div>
+			<div class="divTableCell">foot2</div>
+			<div class="divTableCell">foot3</div>
+			<div class="divTableCell">foot4</div>
+			<div class="divTableCell">foot5</div>
+		</div>
+	</div>
+	-->
+</div>
+
+{% endblock %}
